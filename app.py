@@ -34,7 +34,23 @@ def create_table():
 # Homepage
 @app.route("/")
 def home():
-    return render_template("index.html")
+    connection = get_db_connection()
+
+    students = connection.execute(
+        "SELECT * FROM students ORDER BY id DESC"
+    ).fetchall()
+
+    total_courses = connection.execute(
+        "SELECT COUNT(DISTINCT course) FROM students"
+    ).fetchone()[0]
+
+    connection.close()
+
+    return render_template(
+        "index.html",
+        students=students,
+        total_courses=total_courses
+    )
 
 
 # Register student
@@ -60,7 +76,21 @@ def add_student():
 
     return redirect(url_for("home"))
 
+@app.route("/delete_student/<int:student_id>")
+def delete_student(student_id):
+    connection = get_db_connection()
 
+    connection.execute(
+        "DELETE FROM students WHERE id = ?",
+        (student_id,)
+    )
+
+    connection.commit()
+    connection.close()
+
+    flash("Student deleted successfully!")
+
+    return redirect(url_for("home"))
 if __name__ == "__main__":
     create_table()
     app.run(debug=True)
