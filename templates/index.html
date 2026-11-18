@@ -5,35 +5,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <h1>Student Management System</h1>
-    <h2>Register New Student</h2>
+    <div class="container">
 
-    <form>
-        <label>Full Name</label>
-        <input type="text" placeholder="Enter student name" required>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>StudentHub</h2>
+            <ul>
+                <li class="active">Dashboard</li>
+                <li>Students</li>
+                <li>Courses</li>
+                <li>Settings</li>
+            </ul>
+        </aside>
 
-        <br><br>
+        <!-- Main Dashboard -->
+        <main class="main-content">
 
-        <label>Email</label>
-        <input type="email" placeholder="Enter email" required>
+            <header class="header">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome to your student management system.</p>
+                </div>
+                <h3>Admin</h3>
+            </header>
 
-        <br><br>
+            <!-- Statistics -->
+            <section class="stats">
+                <div class="card">
+                    <h3>Total Students</h3>
+                    <h2>0</h2>
+                </div>
 
-        <label>Phone Number</label>
-        <input type="tel" placeholder="Enter phone number" required>
+                <div class="card">
+                    <h3>Total Courses</h3>
+                    <h2>0</h2>
+                </div>
 
-        <br><br>
+                <div class="card">
+                    <h3>New Registrations</h3>
+                    <h2>0</h2>
+                </div>
+            </section>
 
-        <label>Course</label>
-        <input type="text" placeholder="Enter course" required>
+            <!-- Registration Form -->
+            <section class="form-section">
+                <h2>Register New Student</h2>
+                {% with messages = get_flashed_messages() %}
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                {% endwith %}
 
-        <br><br>
+                <form class="student-form" action="/add_student" method="POST">
 
-        <button type="submit">Register Student</button>
-    </form>
+                    <input type="text" name="name" placeholder="Full Name" required>
+
+                    <input type="email" name="email" placeholder="Email Address" required>
+
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+
+                    <input type="text" name="course" placeholder="Course" required>
+
+                    <button type="submit">Register Student</button>
+
+                </form>
+            </section>
+
+        </main>
+    </div>
 
 </body>
 </html>
