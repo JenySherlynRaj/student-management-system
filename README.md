@@ -25,26 +25,33 @@ A web-based Student Management System built using Python, Flask, SQLite, HTML an
 - Git and GitHub
 
 ## How to Run the Project
+## How to Run the Project
 
-1. Clone this repository:
+1. Clone the repository:
 
-   git clone YOUR_REPOSITORY_URL
+   git clone https://github.com/JenySherlynRaj/student-management-system.git
 
-2. Open the project folder.
+2. Open the project folder:
 
-3. Create and activate a virtual environment:
+   cd student-management-system
+
+3. Create a virtual environment:
 
    python -m venv venv
 
-4. Install Flask:
+4. Activate the virtual environment (Windows):
 
-   pip install flask
+   venv\Scripts\activate
 
-5. Run the application:
+5. Install the required packages:
+
+   pip install -r requirements.txt
+
+6. Run the application:
 
    python app.py
 
-6. Open your browser and visit:
+7. Open your browser:
 
    http://127.0.0.1:5000/
 
