@@ -91,6 +91,38 @@ def delete_student(student_id):
     flash("Student deleted successfully!")
 
     return redirect(url_for("home"))
+@app.route("/edit_student/<int:student_id>", methods=["GET", "POST"])
+def edit_student(student_id):
+
+    connection = get_db_connection()
+
+    if request.method == "POST":
+
+        name = request.form["name"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+        course = request.form["course"]
+
+        connection.execute(
+            "UPDATE students SET name = ?, email = ?, phone = ?, course = ? WHERE id = ?",
+            (name, email, phone, course, student_id)
+        )
+
+        connection.commit()
+        connection.close()
+
+        flash("Student updated successfully!")
+
+        return redirect(url_for("home"))
+
+    student = connection.execute(
+        "SELECT * FROM students WHERE id = ?",
+        (student_id,)
+    ).fetchone()
+
+    connection.close()
+
+    return render_template("edit_student.html", student=student)
 if __name__ == "__main__":
     create_table()
     app.run(debug=True)

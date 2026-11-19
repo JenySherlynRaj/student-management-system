@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <main class="main-content">
+
+            <section class="form-section">
+                <h2>Edit Student Details</h2>
+
+                <form class="student-form" action="{{ url_for('edit_student', student_id=student.id) }}" method="POST">
+
+                    <input type="text" name="name" value="{{ student.name }}" placeholder="Full Name" required>
+
+                    <input type="email" name="email" value="{{ student.email }}" placeholder="Email Address" required>
+
+                    <input type="tel" name="phone" value="{{ student.phone }}" placeholder="Phone Number" required>
+
+                    <input type="text" name="course" value="{{ student.course }}" placeholder="Course" required>
+
+                    <button type="submit">Update Student</button>
+
+                </form>
+
+                <p style="margin-top: 20px;">
+                    <a href="{{ url_for('home') }}">Back to Dashboard</a>
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
