@@ -32,13 +32,22 @@ def create_table():
 
 
 # Homepage
+
 @app.route("/")
 def home():
+
     connection = get_db_connection()
 
+    search_query = request.args.get("search", "")
+
     students = connection.execute(
-        "SELECT * FROM students ORDER BY id DESC"
+        "SELECT * FROM students WHERE name LIKE ? ORDER BY id DESC",
+        ("%" + search_query + "%",)
     ).fetchall()
+
+    total_students = connection.execute(
+        "SELECT COUNT(*) FROM students"
+    ).fetchone()[0]
 
     total_courses = connection.execute(
         "SELECT COUNT(DISTINCT course) FROM students"
@@ -49,7 +58,9 @@ def home():
     return render_template(
         "index.html",
         students=students,
-        total_courses=total_courses
+        total_students=total_students,
+        total_courses=total_courses,
+        search_query=search_query
     )
 
 
