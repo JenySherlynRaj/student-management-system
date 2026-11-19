@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, request, redirect, url_for, flash
+import re
 import sqlite3
 
 app = Flask(__name__)
@@ -65,15 +66,42 @@ def home():
 
 
 # Register student
+
 @app.route("/add_student", methods=["POST"])
 def add_student():
 
-    name = request.form["name"]
-    email = request.form["email"]
-    phone = request.form["phone"]
-    course = request.form["course"]
+    name = request.form["name"].strip()
+    email = request.form["email"].strip()
+    phone = request.form["phone"].strip()
+    course = request.form["course"].strip()
+
+    # Check for empty fields
+    if not all([name, email, phone, course]):
+        flash("All fields are required!")
+        return redirect(url_for("home"))
+
+    # Validate email
+    if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email):
+        flash("Please enter a valid email address!")
+        return redirect(url_for("home"))
+
+    # Validate Indian mobile number
+    if not re.fullmatch(r"[6-9]\d{9}", phone):
+        flash("Please enter a valid 10-digit mobile number!")
+        return redirect(url_for("home"))
 
     connection = get_db_connection()
+
+    # Check for duplicate email
+    existing_student = connection.execute(
+        "SELECT id FROM students WHERE LOWER(email) = LOWER(?)",
+        (email,)
+    ).fetchone()
+
+    if existing_student:
+        connection.close()
+        flash("This email is already registered!")
+        return redirect(url_for("home"))
 
     connection.execute(
         "INSERT INTO students (name, email, phone, course) VALUES (?, ?, ?, ?)",
@@ -86,6 +114,7 @@ def add_student():
     flash("Student registered successfully!")
 
     return redirect(url_for("home"))
+
 
 @app.route("/delete_student/<int:student_id>")
 def delete_student(student_id):
@@ -103,16 +132,46 @@ def delete_student(student_id):
 
     return redirect(url_for("home"))
 @app.route("/edit_student/<int:student_id>", methods=["GET", "POST"])
+
 def edit_student(student_id):
 
     connection = get_db_connection()
 
     if request.method == "POST":
 
-        name = request.form["name"]
-        email = request.form["email"]
-        phone = request.form["phone"]
-        course = request.form["course"]
+        name = request.form["name"].strip()
+        email = request.form["email"].strip()
+        phone = request.form["phone"].strip()
+        course = request.form["course"].strip()
+
+        # Check for empty fields
+        if not all([name, email, phone, course]):
+            connection.close()
+            flash("All fields are required!")
+            return redirect(url_for("home"))
+
+        # Validate email
+        if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email):
+            connection.close()
+            flash("Please enter a valid email address!")
+            return redirect(url_for("home"))
+
+        # Validate Indian mobile number
+        if not re.fullmatch(r"[6-9]\d{9}", phone):
+            connection.close()
+            flash("Please enter a valid 10-digit mobile number!")
+            return redirect(url_for("home"))
+
+        # Check whether another student uses this email
+        existing_student = connection.execute(
+            "SELECT id FROM students WHERE LOWER(email) = LOWER(?) AND id != ?",
+            (email, student_id)
+        ).fetchone()
+
+        if existing_student:
+            connection.close()
+            flash("This email is already registered!")
+            return redirect(url_for("home"))
 
         connection.execute(
             "UPDATE students SET name = ?, email = ?, phone = ?, course = ? WHERE id = ?",
@@ -123,7 +182,6 @@ def edit_student(student_id):
         connection.close()
 
         flash("Student updated successfully!")
-
         return redirect(url_for("home"))
 
     student = connection.execute(
@@ -134,6 +192,7 @@ def edit_student(student_id):
     connection.close()
 
     return render_template("edit_student.html", student=student)
+
 if __name__ == "__main__":
     create_table()
     app.run(debug=True)

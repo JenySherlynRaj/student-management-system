@@ -1,34 +1,36 @@
 
-/* General page styling */
+/* GLOBAL STYLING */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 body {
-    background-color: whitesmoke;
-    color: midnightblue;
+    background: #f4f6fb;
+    color: #1e293b;
 }
 
-/* Main dashboard layout */
+/* MAIN LAYOUT */
 .container {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* SIDEBAR */
 .sidebar {
-    width: 240px;
-    background-color: navy;
+    width: 250px;
+    background: #172554;
     color: white;
     padding: 30px 20px;
+    flex-shrink: 0;
 }
 
 .sidebar h2 {
-    margin-bottom: 40px;
-    font-size: 22px;
+    font-size: 25px;
+    margin-bottom: 45px;
+    letter-spacing: 0.5px;
 }
 
 .sidebar ul {
@@ -38,18 +40,22 @@ body {
 .sidebar li {
     padding: 15px;
     margin-bottom: 10px;
-    border-radius: 8px;
+    border-radius: 9px;
     cursor: pointer;
+    color: #cbd5e1;
+    transition: 0.3s;
 }
 
 .sidebar li.active,
 .sidebar li:hover {
-    background-color: darkslateblue;
+    background: #2563eb;
+    color: white;
 }
 
-/* Main content */
+/* MAIN CONTENT */
 .main-content {
     flex: 1;
+    min-width: 0;
     padding: 35px;
 }
 
@@ -57,56 +63,76 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .header h1 {
-    font-size: 28px;
+    font-size: 30px;
+    color: #172554;
 }
 
 .header p {
-    color: gray;
+    color: #64748b;
     margin-top: 8px;
 }
 
-/* Statistics cards */
+.header h3 {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 10px 18px;
+    border-radius: 8px;
+}
+
+/* STATISTICS CARDS */
 .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 22px;
     margin-bottom: 30px;
 }
 
 .card {
-    background-color: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px lightgray;
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
 .card h3 {
-    color: dimgray;
+    color: #64748b;
     font-size: 14px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .card h2 {
-    font-size: 30px;
-    color: navy;
+    font-size: 32px;
+    color: #2563eb;
 }
 
-/* Registration form */
+/* FORM SECTIONS */
 .form-section {
-    background-color: white;
-    padding: 25px;
-    border-radius: 12px;
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
     margin-bottom: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
 .form-section h2 {
-    margin-bottom: 20px;
+    color: #172554;
+    font-size: 21px;
+    margin-bottom: 22px;
 }
 
+/* REGISTRATION FORM */
 .student-form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -115,34 +141,177 @@ body {
 
 .student-form input {
     width: 100%;
-    padding: 13px;
-    border: 1px solid lightgray;
-    border-radius: 7px;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
     font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.student-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
 }
 
 .student-form button {
-    background-color: royalblue;
+    background: #2563eb;
     color: white;
     border: none;
-    padding: 13px;
-    border-radius: 7px;
+    padding: 14px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
 .student-form button:hover {
-    background-color: mediumblue;
+    background: #1d4ed8;
 }
 
-/* Mobile screen support */
-@media (max-width: 768px) {
+/* SEARCH BAR */
+.search-form {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-form input:focus {
+    border-color: #2563eb;
+}
+
+.search-form button {
+    padding: 13px 22px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background: #1d4ed8;
+}
+
+.clear-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 13px 22px;
+    background: #ef4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
+}
+
+/* STUDENT TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+td {
+    color: #475569;
+    font-size: 14px;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+/* EDIT AND DELETE LINKS */
+td a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 4px;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+td a:last-child {
+    color: #dc2626;
+}
+
+/* EDIT PAGE */
+.main-content .form-section {
+    max-width: 850px;
+    margin: 50px auto;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
     .sidebar {
-        width: 170px;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .sidebar li {
+        margin-bottom: 0;
     }
 
     .main-content {
-        padding: 18px;
+        padding: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-content {
+        padding: 14px;
+    }
+
+    .header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header h1 {
+        font-size: 23px;
     }
 
     .stats {
@@ -152,96 +321,21 @@ body {
     .student-form {
         grid-template-columns: 1fr;
     }
-}
 
-/* Registered Students Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+    .form-section {
+        padding: 18px;
+        overflow-x: auto;
+    }
 
-th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid lightgray;
-}
+    .search-form {
+        flex-wrap: wrap;
+    }
 
-th {
-    background-color: whitesmoke;
-    color: navy;
-}
+    .search-form input {
+        flex-basis: 100%;
+    }
 
-td {
-    color: dimgray;
-}
-
-tr:hover {
-    background-color: aliceblue;
-}
-
-/* Student Search */
-.search-form {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.search-form input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid lightgray;
-    border-radius: 7px;
-    font-size: 14px;
-}
-
-.search-form button {
-    background-color: royalblue;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.search-form button:hover {
-    background-color: mediumblue;
-}
-
-.search-form {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.search-form input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-}
-
-.search-form button {
-    padding: 12px 20px;
-    background-color: royalblue;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.search-form button:hover {
-    background-color: mediumblue;
-}
-
-.clear-btn {
-    padding: 12px 20px;
-    background-color: #dc3545;
-    color: white;
-    text-decoration: none;
-    border-radius: 7px;
-}
-
-.clear-btn:hover {
-    background-color: #b02a37;
+    th, td {
+        padding: 12px;
+    }
 }
