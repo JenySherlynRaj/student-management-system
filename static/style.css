@@ -179,3 +179,69 @@ td {
 tr:hover {
     background-color: aliceblue;
 }
+
+/* Student Search */
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.search-form button {
+    background-color: royalblue;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: mediumblue;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+.search-form button {
+    padding: 12px 20px;
+    background-color: royalblue;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: mediumblue;
+}
+
+.clear-btn {
+    padding: 12px 20px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+.clear-btn:hover {
+    background-color: #b02a37;
+}
