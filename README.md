@@ -25,7 +25,6 @@ A web-based Student Management System built using Python, Flask, SQLite, HTML an
 - Git and GitHub
 
 ## How to Run the Project
-## How to Run the Project
 
 1. Clone the repository:
 
