@@ -3,8 +3,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import re
 import sqlite3
 
+import os
+
 app = Flask(__name__)
-app.secret_key = "student-management-secret"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-only-change-this")
 
 
 # Connect to database
@@ -22,14 +24,19 @@ def create_table():
         CREATE TABLE IF NOT EXISTS students (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            email TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE COLLATE NOCASE,
             phone TEXT NOT NULL,
             course TEXT NOT NULL
         )
     """)
 
-    connection.commit()
-    connection.close()
+   connection.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_students_email_unique
+    ON students(email COLLATE NOCASE)
+""")
+
+connection.commit()
+connection.close()
 
 
 # Homepage
@@ -116,7 +123,7 @@ def add_student():
     return redirect(url_for("home"))
 
 
-@app.route("/delete_student/<int:student_id>")
+@app.route("/delete_student/<int:student_id>", methods=["POST"])
 def delete_student(student_id):
     connection = get_db_connection()
 
@@ -195,6 +202,6 @@ def edit_student(student_id):
 
 if __name__ == "__main__":
     create_table()
-    app.run(debug=True)
+    app.run(debug=False)
 
 
